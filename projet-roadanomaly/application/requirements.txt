@@ -1,0 +1,5 @@
+gradio
+onnxruntime
+opencv-python-headless
+numpy
+# Chaque membre ajoute ici les bibliothèques dont son objectif a besoin (ex. torch, ultralytics…)

@@ -1,0 +1,1 @@
+Déposez ici model.onnx et config.json (produits par le notebook 05_deploiement).

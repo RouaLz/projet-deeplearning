@@ -1,0 +1,1 @@
+Déposez ici le modèle de l'objectif 4 (ex. model.onnx, poids .pt, fichier de configuration).

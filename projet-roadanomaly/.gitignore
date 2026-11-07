@@ -1,0 +1,27 @@
+# --- Données : le dataset RoadAnomaly ne doit pas être publié (usage recherche) ---
+RoadAnomaly/
+data/
+*.zip
+application/exemples/objectif_1/*.jpg
+
+# --- Modèles lourds : à partager via les Releases GitHub ou Git LFS ---
+*.onnx
+*.pt
+*.pth
+*.ckpt
+
+# --- Prédictions brutes produites par les notebooks ---
+*.npz
+
+# --- Python / Jupyter ---
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# --- Système ---
+.DS_Store
+Thumbs.db
+desktop.ini
