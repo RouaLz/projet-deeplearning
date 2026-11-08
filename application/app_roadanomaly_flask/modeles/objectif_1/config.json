@@ -1,0 +1,23 @@
+{
+ "label": "C. DeepLabV3+ pré-entraîné",
+ "architecture": "DeepLabV3Plus",
+ "encoder": "resnet34",
+ "threshold": 0.3443137254901961,
+ "work_width": 960,
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "cv_AP": 0.8301600866502716,
+ "cv_IoU_mean": 0.6562694487608406,
+ "cv_IoU_std": 0.054899411731899224,
+ "final_epochs": 15,
+ "trained_on_images": 60,
+ "dataset": "RoadAnomaly (Lis et al., ICCV 2019)"
+}

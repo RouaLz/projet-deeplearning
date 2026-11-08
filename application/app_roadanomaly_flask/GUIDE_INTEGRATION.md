@@ -1,18 +1,19 @@
-# Guide d'intégration — ajouter son objectif à l'application
+# Guide d'intégration — ajouter son objectif à l'application (Flask)
 
 L'application a une barre de 6 boutons. Le bouton 1 est la **segmentation des anomalies** (déjà
 fait). Les boutons 2 à 6 attendent le travail des autres membres : chacun remplit **un seul
-fichier**, `objectifs/objectif_N.py`, où N est son numéro.
+fichier**, `objectifs/objectif_N.py`, où N est son numéro. **Aucun HTML ni JavaScript à écrire.**
 
 ```
-app_roadanomaly_v3/
-├── app.py                     ← ne pas modifier (barre de navigation, thème)
+app_roadanomaly_flask/
+├── app.py                     ← ne pas modifier (serveur, navigation)
 ├── objectifs/
 │   ├── commun.py              ← outils partagés (ne pas modifier)
 │   ├── objectif_1.py          ← segmentation (fait)
 │   ├── objectif_2.py          ← membre 2
 │   ├── …
 │   └── objectif_6.py          ← membre 6
+├── templates/, static/        ← pages et thème (ne pas modifier)
 ├── modeles/objectif_N/        ← le modèle du membre N (poids, configuration)
 ├── exemples/objectif_N/       ← ses images d'exemple (facultatif)
 └── requirements.txt           ← ajouter ses bibliothèques
@@ -21,18 +22,18 @@ app_roadanomaly_v3/
 ## Les 4 étapes
 
 1. **Compléter `INFO`** : texte du bouton (court : 1 à 2 mots), titre de la page, nom du membre,
-   description en une ou deux phrases.
+   description en une ou deux phrases. Facultatif : `"pastilles": ["Modèle : ResNet18", "F1 : 0,87"]`.
 2. **Déposer le modèle** dans `modeles/objectif_N/`.
 3. **Écrire deux fonctions** :
    - `charger()` : appelée **une seule fois** au démarrage ; elle charge le modèle et le renvoie ;
    - `predire(image, modele)` : reçoit une photo RGB (tableau numpy, valeurs 0 à 255) et renvoie
-     `(image_resultat, texte)`. `image_resultat` est l'image à afficher (ou `None`) et `texte`
-     le résultat en Markdown.
+     `(image_resultat, texte)`. `image_resultat` est l'image à afficher (tableau numpy RGB, ou
+     `None`) et `texte` le résultat en **Markdown** (gras `**…**`, listes `- …`).
 4. **Passer `PRET = True`**, ajouter ses bibliothèques à `requirements.txt`, relancer
    `python app.py`.
 
-La page standard (image → bouton « Analyser » → image résultat + texte + exemples) est alors
-construite automatiquement, avec le même design que la page 1.
+La page standard (dépôt d'image → « Analyser » → image résultat + texte + exemples) est alors
+affichée automatiquement, avec le même thème et la couleur du bouton.
 
 Tant que `PRET = False`, la page affiche « En attente d'intégration ». Si le fichier contient une
 erreur, seule cette page affiche l'erreur : les autres pages continuent de fonctionner.
@@ -79,18 +80,23 @@ def charger():
     return YOLO(str(DOSSIER / "best.pt"))
 
 def predire(image, modele):
-    r = modele(image, verbose=False)[0]
-    vis = r.plot()[..., ::-1]                      # ultralytics dessine en BGR -> RGB
+    r = modele(image[..., ::-1], verbose=False)[0]   # ultralytics attend du BGR
+    vis = r.plot()[..., ::-1]                         # et dessine en BGR -> RGB
     return vis, f"**{len(r.boxes)} objet(s) détecté(s)**"
 ```
 
 ## Pour une interface différente
 
-Si la page standard ne convient pas (plusieurs images en entrée, une vidéo, des curseurs…),
-définir dans son fichier une fonction `construire(numero)` qui crée ses propres composants
-Gradio. Elle remplace alors la page standard. Voir `objectif_1.py`, qui le fait pour le tableau
-des zones cliquables. Utiliser `entete(numero, INFO, "pret")` (de `commun.py`) pour garder le
-même en-tête que les autres pages.
+Si la page standard ne convient pas (plusieurs images, une vidéo, un tableau…), on peut faire
+comme l'objectif 1 :
+
+- créer son gabarit `templates/objectif_N.html` (qui commence par `{% extends "base.html" %}`) et
+  son script `static/objectif_N.js` ;
+- dans `objectif_N.py`, ajouter `GABARIT = "objectif_N.html"` et une fonction
+  `analyser(modele, img=None, seuil=None, ident=None)` qui renvoie un dictionnaire : il est envoyé
+  tel quel au navigateur en JSON.
+
+Voir `objectif_1.py`, `templates/objectif_1.html` et `static/objectif_1.js`.
 
 ## Avec Git
 

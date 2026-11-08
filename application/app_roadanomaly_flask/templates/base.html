@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ obj.info.titre }} · Anomalies routières</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="--acc: {{ obj.couleur }}">
+
+<header class="banniere">
+  <div class="banniere-texte">
+    <span class="sur-titre">Projet de deep learning · dataset RoadAnomaly</span>
+    <h1>Détection d'anomalies sur la route</h1>
+    <p>Choisissez un objectif : chaque bouton ouvre l'interface correspondante.</p>
+  </div>
+  <div class="banniere-route" aria-hidden="true"><span></span><span></span><span></span></div>
+</header>
+
+<nav class="barre-nav">
+  {% for o in objectifs %}
+  <a href="{{ url_for('page', numero=o.numero) }}" style="--c: {{ o.couleur }}"
+     class="nav-btn {% if o.numero == obj.numero %}actif{% endif %}">
+    <span class="nav-num">{{ o.numero }}</span>
+    <span class="nav-txt">{{ o.info.bouton }}</span>
+    {% if o.statut != 'pret' %}<span class="nav-etat" title="{{ 'Erreur' if o.statut == 'erreur' else 'En attente' }}"></span>{% endif %}
+  </a>
+  {% endfor %}
+</nav>
+
+<main>
+  <section class="entete">
+    <div class="entete-num">{{ obj.numero }}</div>
+    <div class="entete-texte">
+      <div class="ligne-titre">
+        <h2>{{ obj.info.titre }}</h2>
+        {% if obj.statut == 'pret' %}<span class="badge ok">Opérationnel</span>
+        {% elif obj.statut == 'attente' %}<span class="badge attente">En attente d'intégration</span>
+        {% else %}<span class="badge erreur">Erreur au chargement</span>{% endif %}
+      </div>
+      {% if obj.info.membre %}<div class="membre">{{ obj.info.membre }}</div>{% endif %}
+      {% if obj.info.description %}<p>{{ obj.info.description }}</p>{% endif %}
+      {% if obj.pastilles %}
+      <div class="pastilles">{% for p in obj.pastilles %}<span class="pastille">{{ p }}</span>{% endfor %}</div>
+      {% endif %}
+    </div>
+  </section>
+
+  {% block contenu %}{% endblock %}
+</main>
+
+<footer>
+  Projet étudiant de deep learning, entraîné sur peu d'images : les résultats sur des scènes très différentes
+  peuvent être mauvais. Ce n'est pas un système de sécurité.
+</footer>
+
+<script>window.NUMERO = {{ obj.numero }};</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

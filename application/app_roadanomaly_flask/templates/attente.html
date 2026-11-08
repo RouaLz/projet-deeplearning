@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block contenu %}
+<div class="carte carte-attente">
+  <h3>Cette page attend le code de {{ obj.info.membre or "ce membre" }}</h3>
+  <p>Pour activer cet objectif, dans le fichier <code>objectifs/objectif_{{ obj.numero }}.py</code> :</p>
+  <ol>
+    <li>compléter <code>INFO</code> (titre, membre, description, texte du bouton) ;</li>
+    <li>écrire <code>charger()</code> : charger le modèle depuis <code>modeles/objectif_{{ obj.numero }}/</code> ;</li>
+    <li>écrire <code>predire(image, modele)</code> : renvoyer une image résultat et un texte ;</li>
+    <li>passer <code>PRET = True</code>, puis relancer <code>python app.py</code>.</li>
+  </ol>
+  <p>Images d'exemple (facultatif) : les déposer dans <code>exemples/objectif_{{ obj.numero }}/</code>.
+  Le détail est dans <code>GUIDE_INTEGRATION.md</code>.</p>
+</div>
+{% endblock %}

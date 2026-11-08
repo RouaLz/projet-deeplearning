@@ -1,0 +1,34 @@
+{# Bloc commun : zone de dépôt de l'image + exemples #}
+<div class="carte">
+  <h3 class="carte-titre">Image à analyser</h3>
+  <label id="depot" class="depot">
+    <input id="fichier" type="file" accept="image/*" hidden>
+    <div class="depot-vide">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <strong>Glissez une photo ici</strong>
+      <span>ou cliquez pour choisir un fichier (JPG, PNG)</span>
+    </div>
+    <img id="apercu" alt="Aperçu de l'image" hidden>
+  </label>
+  {% if reglage_seuil %}
+  <div class="reglage">
+    <div class="reglage-haut"><label for="seuil">Seuil de décision</label><output id="seuil-val">{{ "%.2f"|format(seuil) }}</output></div>
+    <input id="seuil" type="range" min="0.05" max="0.95" step="0.01" value="{{ seuil }}">
+    <small>Plus bas : plus de détections, mais plus de fausses alarmes. Valeur choisie sur la validation : {{ "%.2f"|format(seuil) }}.</small>
+  </div>
+  {% endif %}
+  <div class="actions">
+    <button id="effacer" class="btn secondaire" type="button">Effacer</button>
+    <button id="analyser" class="btn primaire" type="button" disabled>Analyser</button>
+  </div>
+  {% if exemples %}
+  <h4 class="sous-titre">Exemples <span>cliquez pour charger</span></h4>
+  <div class="exemples">
+    {% for e in exemples %}
+    <button type="button" class="exemple" data-nom="{{ e }}" title="{{ e }}">
+      <img src="{{ url_for('image_exemple', numero=obj.numero, nom=e) }}" alt="{{ e }}" loading="lazy">
+    </button>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

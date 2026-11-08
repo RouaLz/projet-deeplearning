@@ -1,11 +1,11 @@
-"""Objectif 4 — à compléter par le membre responsable.
+"""Objectif 2 — à compléter par le membre responsable.
 
-Ce fichier est la page n° 4 de l'application. Pour l'activer :
+Ce fichier est la page n° 2 de l'application. Pour l'activer :
   1. compléter INFO ci-dessous ;
-  2. déposer le modèle (et ses fichiers) dans modeles/objectif_4/ ;
+  2. déposer le modèle (et ses fichiers) dans modeles/objectif_2/ ;
   3. écrire charger() et predire() ;
   4. passer PRET = True, puis relancer « python app.py ».
-Les images d'exemple (facultatif) vont dans exemples/objectif_4/.
+Les images d'exemple (facultatif) vont dans exemples/objectif_2/.
 Voir GUIDE_INTEGRATION.md pour des exemples complets (classification, détection, etc.).
 """
 import numpy as np
@@ -13,16 +13,16 @@ import numpy as np
 from .commun import dossier_modele
 
 INFO = {
-    "bouton": "Objectif 4",                       # texte du bouton dans la barre de navigation
-    "titre": "Objectif 4",                        # titre de la page
-    "membre": "Membre 4",                         # nom du membre responsable
+    "bouton": "Objectif 2",                       # texte du bouton dans la barre de navigation
+    "titre": "Objectif 2",                        # titre de la page
+    "membre": "Membre 2",                         # nom du membre responsable
     "description": "Description de l'objectif à compléter.",
     "libelle_resultat": "Résultat",              # titre du cadre de l'image résultat
     # "pastilles": ["Modèle : …", "Score : …"],    # facultatif : petites étiquettes sous le titre
 }
 PRET = False          # passer à True quand charger() et predire() sont écrits
 
-DOSSIER = dossier_modele(4)                     # = modeles/objectif_4/
+DOSSIER = dossier_modele(2)                     # = modeles/objectif_2/
 
 
 def charger():
@@ -39,8 +39,3 @@ def predire(image, modele):
       - texte : résultat en Markdown, par exemple "**Classe prédite :** animal (92 %)".
     """
     raise NotImplementedError("predire() n'est pas encore écrite")
-
-
-# Facultatif : pour une interface entièrement personnalisée, définir
-#   def construire(numero): ...   (composants Gradio)
-# Elle remplace alors la page standard « image -> predire() -> résultat ».

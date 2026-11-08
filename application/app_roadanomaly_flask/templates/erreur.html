@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block contenu %}
+<div class="carte carte-attente erreur">
+  {% if obj.manquants %}
+  <h3>Modèle introuvable</h3>
+  <p>Copiez {% for f in obj.manquants %}<code>{{ f }}</code>{% if not loop.last %} et {% endif %}{% endfor %}
+  dans le dossier <code>modeles/objectif_{{ obj.numero }}/</code>, puis relancez <code>python app.py</code>.</p>
+  {% else %}
+  <h3>Le module n'a pas pu être chargé</h3>
+  <p>Les autres pages fonctionnent normalement. Détail de l'erreur :</p>
+  <pre>{{ obj.erreur }}</pre>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,4 +1,5 @@
-gradio
+flask
+markdown
 onnxruntime
 opencv-python-headless
 numpy

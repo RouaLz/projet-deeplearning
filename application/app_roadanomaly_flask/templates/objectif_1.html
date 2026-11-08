@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block contenu %}
+<div class="grille">
+  <div class="col-gauche">
+    {% set reglage_seuil = true %}
+    {% include "_entree.html" %}
+  </div>
+
+  <div class="col-droite">
+    <div id="resume" class="resume vide"><span>Déposez une image ou choisissez un exemple, puis cliquez sur « Analyser ».</span></div>
+
+    <div class="carte">
+      <div class="onglets" role="tablist">
+        <button class="onglet actif" data-cible="vue-resultat" type="button">Anomalies détectées</button>
+        <button class="onglet" data-cible="vue-carte" type="button">Carte de probabilité</button>
+      </div>
+      <div id="vue-resultat" class="vue">
+        <div class="cadre-image" id="cadre-resultat">
+          <div class="vide-image">Le résultat s'affichera ici.</div>
+          <img id="img-resultat" alt="Anomalies détectées" hidden>
+          <div id="calque-zones" class="calque"></div>
+        </div>
+      </div>
+      <div id="vue-carte" class="vue" hidden>
+        <div class="cadre-image">
+          <div class="vide-image">La carte de probabilité s'affichera ici.</div>
+          <img id="img-carte" alt="Carte de probabilité" hidden>
+        </div>
+        <div class="legende"><span>faible</span><div class="degrade"></div><span>élevée</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grille bas">
+  <div class="carte">
+    <h3 class="carte-titre">Zones détectées <span class="aide">cliquez sur une ligne ou sur une zone de l'image</span></h3>
+    <div class="tableau-wrap">
+      <table id="tableau-zones">
+        <thead><tr><th>N°</th><th>Position</th><th>Surface</th><th>Confiance</th><th>Niveau</th></tr></thead>
+        <tbody><tr class="ligne-vide"><td colspan="5">Aucune analyse pour l'instant.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="carte" id="detail-zone">
+    <h3 class="carte-titre">Zone agrandie</h3>
+    <div class="cadre-image petit">
+      <div class="vide-image">Sélectionnez une zone pour l'agrandir.</div>
+      <img id="img-zoom" alt="Zone agrandie" hidden>
+    </div>
+    <div id="infos-zone" class="infos-zone"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='commun.js') }}"></script>
+<script src="{{ url_for('static', filename='objectif_1.js') }}"></script>
+{% endblock %}

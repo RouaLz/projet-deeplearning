@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{# Page standard d'un objectif : image -> predire(image, modele) -> image résultat + texte #}
+{% block contenu %}
+<div class="grille">
+  <div class="col-gauche">
+    {% include "_entree.html" %}
+  </div>
+  <div class="col-droite">
+    <div class="carte">
+      <h3 class="carte-titre">{{ obj.info.libelle_resultat or "Résultat" }}</h3>
+      <div class="cadre-image">
+        <div class="vide-image">Le résultat s'affichera ici.</div>
+        <img id="img-resultat" alt="Résultat" hidden>
+      </div>
+      <div id="texte-resultat" class="texte-resultat">
+        <p class="discret">Déposez une image ou choisissez un exemple, puis cliquez sur « Analyser ».</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='commun.js') }}"></script>
+<script src="{{ url_for('static', filename='generique.js') }}"></script>
+{% endblock %}

@@ -39,8 +39,3 @@ def predire(image, modele):
       - texte : résultat en Markdown, par exemple "**Classe prédite :** animal (92 %)".
     """
     raise NotImplementedError("predire() n'est pas encore écrite")
-
-
-# Facultatif : pour une interface entièrement personnalisée, définir
-#   def construire(numero): ...   (composants Gradio)
-# Elle remplace alors la page standard « image -> predire() -> résultat ».
